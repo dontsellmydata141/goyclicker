@@ -1,0 +1,286 @@
+<title>GOY CLICKER</title>
+
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 15;
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: white;
+        color: #000;
+    }
+
+    h1 {
+        font-size: 3rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        margin-bottom: 30px;
+        color: #000;
+        border-bottom: 8px solid #000;
+    }
+
+    h4 {
+        margin: 8px 0;
+        font-weight: 700;
+        color: #000;
+    }
+
+    button {
+        cursor: pointer;
+        margin: 20px; 
+        padding: 12px 24px;
+        background-color: #f8f9fa;
+        border: 2px solid #000;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    button:hover {
+        background-color: #e8eaf6;
+        border-color: #000;
+        transform: translateY(-1px);
+    }
+
+    button:active {
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    #epstein {
+        cursor: pointer;
+        margin: 60px 20px; 
+        background: none;
+        border: none;
+        padding: 0;
+        position: relative;
+        z-index: 1; 
+        box-shadow: none;
+    }
+
+    #epstein:hover {
+        background: none;
+        transform: scale(1.05);
+    }
+
+    #epstein img {
+        width: 200px; 
+        border: none;
+        animation: spin 5s linear infinite;
+        display: block; 
+    }
+
+    input#goycode {
+        padding: 10px;
+        border: 2px solid #000;
+        border-radius: 4px;
+        font-size: 1rem;
+        outline: none;
+    }
+
+    input#goycode:focus {
+        border-color: #000;
+    }
+	 
+    h5 {
+        font-style: italic;
+        font-size: 1.2rem;
+        color: #000;
+        max-width: 600px;
+        line-height: 1.6;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+<h1>goy clicker</h1>
+
+<div><h4>goy power: <span id="goypowerdisplay">1</span></h4></div>
+<div><h4>money: <span id="goyscoredisplay">0</span></h4></div>
+<div><h4>passive income: <span id="passiveincome">0</span></h4></div>
+
+<button id="epstein" onclick="epstein()">
+    <img src="resources/israel.png">
+</button>
+
+<div>
+    <button onclick="buyupgrade(1)" id="goyupgrade1">
+        small coin magnet (+1 power) - <span id="upgrade1">100</span>
+    </button>
+</div>
+
+<div>
+    <button onclick="buyupgrade(2)" id="goyupgrade2">
+        idf solider (+5 passive) - <span id="upgrade2">1000</span>
+    </button>
+</div>
+
+<div>
+    <button onclick="buyupgrade(3)" id="goyupgrade3">
+        israelgpt response (+5 power, +10 passive) - <span id="upgrade3">5000</span>
+    </button>
+</div>
+
+<div>
+    <button onclick="buyupgrade(4)" id="goyupgrade4">
+        invest in oracle (+25 power, +50 passive) - <span id="upgrade4">35000</span>
+    </button>
+</div>
+
+<div>
+	 <button onclick="buyupgrade(5)" id="goyupgrade5">
+		  buy a politician (+250 passive) - <span id="upgrade5">100000</span>
+	 </button>
+</div>
+
+<div>
+	 <button onclick="buyupgrade(6)" id="goyupgrade6">
+	 	  iron dome donation (+200 power, +750 passive) - <span id="upgrade6">250000</span>
+	 </button>
+</div>
+
+<div>
+	 <button onclick="buyupgrade(7)" id="goyupgrade7">
+	 	  bomb iran (+2000 power, +5000 passive) - <span id="upgrade7">1000000</span>
+	 </button>
+</div>
+
+<div>
+	 <button onclick="buyupgrade(8)" id="goyupgrade8">
+	 	  fire space lasers (+10000 power, +30000 passive) - <span id="upgrade8">5000000</span>
+	 </button>
+</div>
+
+
+<div>
+    <h4>code: </h4>
+    <input id="goycode" type="text">
+    <button onclick="redeemcode()">redeem</button>
+</div>
+
+<audio autoplay loop muted>
+  <source src="resources/bgm.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+
+<img src="resources/lflem.png">
+<div><h2>a quote from luca fleming</h2></div>
+<div><h4>----------------------------------------------------</h4></div>
+<div><h5>"glory to the state of israel i love benjamin netanyahu"</h5></div>
+
+<script>
+    var goyscore = 0;
+    var goypower = 1;
+    var passiveincome = 0;
+    var upgrade1cost = 100;
+    var upgrade2cost = 1000;
+    var upgrade3cost = 5000;
+    var upgrade4cost = 35000;
+	 var upgrade5cost = 100000;
+	 var upgrade6cost = 250000;
+	 var upgrade7cost = 1000000;
+	 var upgrade8cost = 5000000;
+	 
+    setInterval(function() {
+        goyscore += passiveincome/100;
+        update();
+    }, 10);
+
+    function update() {
+        document.getElementById("goypowerdisplay").innerHTML = Math.floor(goypower);
+        document.getElementById("goyscoredisplay").innerHTML = Math.floor(goyscore);
+        document.getElementById("passiveincome").innerHTML = passiveincome;
+        document.getElementById("upgrade1").innerHTML = Math.floor(upgrade1cost);
+        document.getElementById("upgrade2").innerHTML = Math.floor(upgrade2cost);
+        document.getElementById("upgrade3").innerHTML = Math.floor(upgrade3cost);
+        document.getElementById("upgrade4").innerHTML = Math.floor(upgrade4cost);
+		  document.getElementById("upgrade5").innerHTML = Math.floor(upgrade5cost);
+		  document.getElementById("upgrade6").innerHTML = Math.floor(upgrade6cost);
+		  document.getElementById("upgrade7").innerHTML = Math.floor(upgrade7cost);
+		  document.getElementById("upgrade8").innerHTML = Math.floor(upgrade8cost);
+    }
+
+    function epstein() {
+        goyscore += goypower;
+        update();
+    }
+
+    function redeemcode() {
+        var codeInput = document.getElementById("goycode").value;
+        if (codeInput === "ilovebenjaminnetanyahu") {
+            goyscore += 1000;
+            goypower += 10;
+				passiveincome += 50;
+        }
+        if (codeInput === "glorytoisrael") {
+            goypower += 100;
+				passiveincome += 25;
+        }
+		  if (codeInput === "givemesomepi") {
+		  		goypower += 1000000000000
+				passiveincome += 1000000000000000
+				goyscore += 1000000000000000000		  
+		  }
+        update();
+		  
+        document.getElementById("goycode").value = ""; 
+    }
+
+    function buyupgrade(upgradenum) {
+        if (upgradenum === 1 && goyscore >= upgrade1cost) {
+            goypower += 1;
+            goyscore -= upgrade1cost;
+            upgrade1cost *= 1.1;
+        }
+        if (upgradenum === 2 && goyscore >= upgrade2cost) {
+            passiveincome += 5;
+            goyscore -= upgrade2cost;
+            upgrade2cost *= 1.1;
+        }
+        if (upgradenum === 3 && goyscore >= upgrade3cost) {
+            passiveincome += 10;
+            goypower += 5;
+            goyscore -= upgrade3cost;
+            upgrade3cost *= 1.1;
+        }
+        if (upgradenum === 4 && goyscore >= upgrade4cost) {
+            passiveincome += 50;
+            goypower += 25;
+            goyscore -= upgrade4cost;
+            upgrade4cost *= 1.1;
+        }
+   	  if (upgradenum === 5 && goyscore >= upgrade5cost) {
+            passiveincome += 250;
+            goyscore -= upgrade5cost;
+            upgrade5cost *= 1.1;
+        }
+		  if (upgradenum === 6 && goyscore >= upgrade6cost) {
+            passiveincome += 750;
+				goypower += 250;
+            goyscore -= upgrade6cost;
+            upgrade6cost *= 1.1;
+        }
+		  if (upgradenum === 7 && goyscore >= upgrade7cost) {
+		  		passiveincome += 5000;
+				goypower += 2000;
+				goyscore -= upgrade7cost;
+				upgrade7cost *= 1.1
+		  }
+		  if (upgradenum === 8 && goyscore >= upgrade8cost) {
+		  		passiveincome += 30000;
+				goypower += 10000;
+				goyscore -= upgrade8cost;
+				upgrade8cost *= 1.1;
+		  }
+        update();
+    }
+</script>
