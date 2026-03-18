@@ -185,11 +185,48 @@
     var upgrade2cost = 1000;
     var upgrade3cost = 5000;
     var upgrade4cost = 35000;
-	 var upgrade5cost = 100000;
-	 var upgrade6cost = 250000;
-	 var upgrade7cost = 1000000;
-	 var upgrade8cost = 5000000;
-	 
+    var upgrade5cost = 100000;
+    var upgrade6cost = 250000;
+    var upgrade7cost = 1000000;
+    var upgrade8cost = 5000000;
+
+    // --- AUTOSAVE LOGIC START ---
+    function saveGame() {
+        const gameData = {
+            goyscore, goypower, passiveincome,
+            upgrade1cost, upgrade2cost, upgrade3cost, upgrade4cost,
+            upgrade5cost, upgrade6cost, upgrade7cost, upgrade8cost
+        };
+        localStorage.setItem("goyClickerSave", JSON.stringify(gameData));
+        console.log("Game Autosaved");
+    }
+
+    function loadGame() {
+        const savedData = localStorage.getItem("goyClickerSave");
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            goyscore = data.goyscore;
+            goypower = data.goypower;
+            passiveincome = data.passiveincome;
+            upgrade1cost = data.upgrade1cost;
+            upgrade2cost = data.upgrade2cost;
+            upgrade3cost = data.upgrade3cost;
+            upgrade4cost = data.upgrade4cost;
+            upgrade5cost = data.upgrade5cost;
+            upgrade6cost = data.upgrade6cost;
+            upgrade7cost = data.upgrade7cost;
+            upgrade8cost = data.upgrade8cost;
+            update();
+        }
+    }
+
+    // Run load on startup
+    loadGame();
+
+    // Autosave every 30 seconds
+    setInterval(saveGame, 30000);
+    // --- AUTOSAVE LOGIC END ---
+
     setInterval(function() {
         goyscore += passiveincome/100;
         update();
@@ -203,10 +240,10 @@
         document.getElementById("upgrade2").innerHTML = Math.floor(upgrade2cost);
         document.getElementById("upgrade3").innerHTML = Math.floor(upgrade3cost);
         document.getElementById("upgrade4").innerHTML = Math.floor(upgrade4cost);
-		  document.getElementById("upgrade5").innerHTML = Math.floor(upgrade5cost);
-		  document.getElementById("upgrade6").innerHTML = Math.floor(upgrade6cost);
-		  document.getElementById("upgrade7").innerHTML = Math.floor(upgrade7cost);
-		  document.getElementById("upgrade8").innerHTML = Math.floor(upgrade8cost);
+        document.getElementById("upgrade5").innerHTML = Math.floor(upgrade5cost);
+        document.getElementById("upgrade6").innerHTML = Math.floor(upgrade6cost);
+        document.getElementById("upgrade7").innerHTML = Math.floor(upgrade7cost);
+        document.getElementById("upgrade8").innerHTML = Math.floor(upgrade8cost);
     }
 
     function epstein() {
@@ -219,19 +256,18 @@
         if (codeInput === "ilovebenjaminnetanyahu") {
             goyscore += 1000;
             goypower += 10;
-				passiveincome += 50;
+            passiveincome += 50;
         }
         if (codeInput === "glorytoisrael") {
             goypower += 100;
-				passiveincome += 25;
+            passiveincome += 25;
         }
-		  if (codeInput === "givemesomepi") {
-		  		goypower += 1000000000000
-				passiveincome += 1000000000000000
-				goyscore += 1000000000000000000		  
-		  }
+        if (codeInput === "givemesomepi") {
+            goypower += 1000000000000;
+            passiveincome += 1000000000000000;
+            goyscore += 1000000000000000000;
+        }
         update();
-		  
         document.getElementById("goycode").value = ""; 
     }
 
@@ -258,29 +294,30 @@
             goyscore -= upgrade4cost;
             upgrade4cost *= 1.1;
         }
-   	  if (upgradenum === 5 && goyscore >= upgrade5cost) {
+        if (upgradenum === 5 && goyscore >= upgrade5cost) {
             passiveincome += 250;
             goyscore -= upgrade5cost;
             upgrade5cost *= 1.1;
         }
-		  if (upgradenum === 6 && goyscore >= upgrade6cost) {
+        if (upgradenum === 6 && goyscore >= upgrade6cost) {
             passiveincome += 750;
-				goypower += 250;
+            goypower += 250;
             goyscore -= upgrade6cost;
             upgrade6cost *= 1.1;
         }
-		  if (upgradenum === 7 && goyscore >= upgrade7cost) {
-		  		passiveincome += 5000;
-				goypower += 2000;
-				goyscore -= upgrade7cost;
-				upgrade7cost *= 1.1
-		  }
-		  if (upgradenum === 8 && goyscore >= upgrade8cost) {
-		  		passiveincome += 30000;
-				goypower += 10000;
-				goyscore -= upgrade8cost;
-				upgrade8cost *= 1.1;
-		  }
+        if (upgradenum === 7 && goyscore >= upgrade7cost) {
+            passiveincome += 5000;
+            goypower += 2000;
+            goyscore -= upgrade7cost;
+            upgrade7cost *= 1.1;
+        }
+        if (upgradenum === 8 && goyscore >= upgrade8cost) {
+            passiveincome += 30000;
+            goypower += 10000;
+            goyscore -= upgrade8cost;
+            upgrade8cost *= 1.1;
+        }
         update();
+        saveGame(); // Save immediately after a purchase
     }
 </script>
